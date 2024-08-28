@@ -76,6 +76,30 @@ print(a)
 
 num = int(input())
 print(num)
+
+flo = float(input())
+print(flo)
+```
+### Multiple input
+
+```py
+a, b, c = input().split()
+print(a)
+print(b)
+print(c)
+```
+#### Multiple inputs on a Single Line specified number:
+```py
+x, y, z = map(int, input().split())
+print(x)
+print(y)
+print(z)
+```
+
+#### Using List:
+```py
+num = list(map(int, input().split()))
+print(num)
 ```
 
 
