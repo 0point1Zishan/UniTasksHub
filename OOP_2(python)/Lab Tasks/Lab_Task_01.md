@@ -2,7 +2,27 @@
 
 ## print Function
 ```py
-print("Hello World! This is a print function", "\nThis is the next line.")
+print("Hello World! This is a print function.")
+```
+#### Newline('\n')
+```py
+print("Hello World\nWelcome to Python")
+```
+#### Horizontal Tab '\t'
+```py
+print("Hello,\tWorld!")
+```
+#### BackSlash '\\'
+```py
+print("This is a backslash: \\")
+```
+#### Double Quote '\"'
+```py
+print("I said, \"Hello, World!\"")
+``` 
+#### Single Quote '\''
+```py
+print('It\'s a beautiful day!')
 ```
 
 ## Comments in Python
@@ -51,7 +71,10 @@ x = {"Zero", "One", "two"}    # set
 
 ## Python Input-Output
 ```py
-num = input("Enter a number: ")
+a = input("Enter a string: ")
+print(a)    
+
+num = int(input())
 print(num)
 ```
 
@@ -67,7 +90,7 @@ mul = a * b  # multiplication
 mod = a % b  # modulus
 power = a ** b  # power(a^b)
 div = a / b  # division
-floorDiv = a / b   # floor division
+floorDiv = a // b   # floor division
 
 print(add)
 print(sub)
@@ -119,6 +142,12 @@ print(b)
 b += 5
 print(b)
 
+b //= a
+print(b)
+
+b **= a
+print(b)
+
 b -= 5
 print(b)
 
@@ -127,6 +156,7 @@ print(b)
 
 b <<= a
 print(b)
+
 ```
 
 
