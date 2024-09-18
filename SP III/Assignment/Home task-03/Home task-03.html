@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Routine Planner</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .header{
+            text-align: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+
+        .header h1{
+            margin: 0;
+        }
+
+        .navbar{
+            background-color: #1abc9c;
+            overflow: hidden;
+        }
+
+        .navbar ul{
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li{
+            float: left;
+        }
+
+        .navbar ul li a{
+            display: block;
+            padding: 14px 20px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .navbar ul li a:hover{
+            background-color: #16a085;
+        }
+
+        .section{
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td{
+            border: 1px solid #ddd;
+        }
+
+        th, td{
+            padding: 12px;
+            text-align: left;
+        }
+
+        tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+
+        ul{
+            list-style-type: square;
+        }
+
+        .contact-form{
+            background-color: #e3e3e3;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .footer{
+            text-align: center;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header" id="top">
+        <h1>Fitness Routine Planner 🏋️‍♂️</h1>
+        <p><em>Stay fit, stay healthy! 💪</em></p>
+    </div>
+
+    <div class="navbar">
+        <ul>
+            <li><a href="#routine">Workout Routine</a></li>
+            <li><a href="#calendar">Track Calendar</a></li>
+            <li><a href="#tips">Fitness Tips</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Workout Routine Section -->
+    <div class="section" id="routine">
+        <h2>Design Your Workout Routine</h2>
+        <p>Select your <strong>workout type</strong> and assign exercises to each day of the week. Customize it to meet your fitness goals! 🏃‍♂️</p>
+
+        <!-- Table for Workout Plan -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Workout</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Saturday</td>
+                    <td>Cardio - Running, Cycling</td>
+                </tr>
+                <tr>
+                    <td>Sunday</td>
+                    <td>Strength - Pushups, Pullups</td>
+                </tr>
+                <tr>
+                    <td>Monday</td>
+                    <td>Flexibility - Yoga, Stretching</td>
+                </tr>
+                <tr>
+                    <td>Tuesday</td>
+                    <td>Cardio - Swimming, Jump Rope</td>
+                </tr>
+                <tr>
+                    <td>Wednesday</td>
+                    <td>Strength - Deadlifts, Squats</td>
+                </tr>
+                <tr>
+                    <td>Thursday</td>
+                    <td>Flexibility - Pilates, Yoga</td>
+                </tr>
+                <tr>
+                    <td>Friday</td>
+                    <td>Rest Day 😴</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Calender -->
+    <div class="section" id="calendar">
+        <h2>Track Your Workouts</h2>
+        <p>Track your progress and stay consistent with your workouts. Here's a simple calendar view:</p>
+        <iframe src="https://calendar.google.com/calendar/embed?src=bn.bangladeshi%23holiday%40group.v.calendar.google.com&ctz=Asia%2FDhaka" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+    </div>
+
+
+    <!-- Fitness Tips Section -->
+    <div class="section" id="tips">
+        <h2>Fitness Tips & Motivation 💡</h2>
+        <blockquote>
+            "The only bad workout is the one that didn't happen." — Unknown
+        </blockquote>
+        <p>Here are some <strong>fitness tips</strong> to help you along your journey:</p>
+        <ul>
+            <li>Stay consistent with your routine.</li>
+            <li>Eat a balanced diet. 🥗</li>
+            <li>Get enough sleep every night. 😴</li>
+            <li>Hydrate! Drink plenty of water. 💧</li>
+            <li>Take breaks to avoid burnout.</li>
+        </ul>
+
+        <p>Remember, fitness is a journey, not a race. Stay motivated and enjoy the process! ✨</p>
+    </div>
+
+
+    <!-- Contact Section -->
+    <div class="section" id="contact">
+        <h2>Contact Us 📧</h2>
+        <p>If you have any questions or need help with your fitness journey, feel free to reach out!</p>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <p><strong>Email:</strong> <a href="mailto:contact@fitnessplanner.com">contact@fitnessplanner.com</a></p>
+            <p><strong>Follow us:</strong> <a href="https://www.instagram.com" target="_blank">Instagram</a> | <a href="https://www.twitter.com" target="_blank">Twitter</a></p>
+        </div>
+    </div>
+
+
+    <div class="footer">
+        <p>&copy; 2024 Fitness Routine Planner. All Rights Reserved.</p>
+        <a href="#top">Back to Top ⬆️</a>
+    </div>
+
+</body>
+</html>
