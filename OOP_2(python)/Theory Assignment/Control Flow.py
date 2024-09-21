@@ -11,11 +11,14 @@ def analyze_grades():
         else:
             return 'F'
 
+    def boost_grades(grades):
+        return list(map(lambda g: g * 1.05, grades))
+
     print("Grade Categories:")
     for grade in grades:
         print(f"Score: {grade} - Grade: {categorize_grade(grade)}")
     
-    boosted_grades = list(map(lambda g: g * 1.05, grades))
+    boosted_grades = boost_grades(grades)
     print(f"Boosted Grades: {boosted_grades}")
     
     above_90 = list(filter(lambda g: g > 90, boosted_grades))
