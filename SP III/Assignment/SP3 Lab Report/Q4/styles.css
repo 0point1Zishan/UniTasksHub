@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: separate;
+    border: 1px solid black;
+    text-align: center;
+    border-spacing: 0;
+}
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+}
+thead th {
+    font-weight: bold;
+}
+tbody td {
+    vertical-align: middle;
+    text-align: center;
+}
+.xpath, .xsl-transformations {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+td[style*="background-color:"] {
+    font-weight: bold;
+    color: #333;
+}

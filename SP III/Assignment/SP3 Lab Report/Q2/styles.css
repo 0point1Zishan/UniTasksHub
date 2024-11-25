@@ -1,0 +1,54 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+.list-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+p {
+  font-size: 14px;
+  margin-bottom: 15px;
+  color: #555;
+}
+ol,
+ul {
+  margin: 0;
+  padding-left: 20px;
+}
+.level-1 {
+  list-style-type: upper-roman;
+}
+.level-2 {
+  list-style-type: decimal;
+}
+.level-2-alpha {
+  list-style-type: lower-alpha;
+}
+.level-3 {
+  list-style-type: circle;
+  margin-left: 20px;
+}
+.level-4 {
+  list-style-type: square;
+  margin-left: 20px;
+}
+ul.level-2 {
+  list-style-type: disc;
+}
+li {
+  margin-bottom: 5px;
+}
