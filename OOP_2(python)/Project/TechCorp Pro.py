@@ -81,10 +81,10 @@ class Net_Salary:
         return self.__absentee
 
     def view_salary(self):
-        print(f"Your Total Salary: {self.__basic_salary + self.__overtime - self.__absentee}")
+        print(f"Your Total Salary: {(self.__basic_salary + self.__overtime) - self.__absentee}")
 
     def withdraw_salary(self):
-        print(f"Withdrawing salary:{self.__basic_salary + self.__overtime - self.__absentee}")
+        print(f"Withdrawing salary:{(self.__basic_salary + self.__overtime) - self.__absentee}")
 
 class Project:
     def __init__(self, title, deadline):
@@ -179,9 +179,9 @@ sum_array = np.sum(array)
 product_array = np.prod(array)
 
 # Common string functions
-text = "Hello, World!"
-len_text = len(text)
-sub_text = text[0:6]
+developer = "Zishan Sarkar Murad"
+len_text = len(developer)
+sub_text = developer[0:7]
 
 def main_menu():
     print("\nMain Menu")
@@ -234,13 +234,13 @@ def handle_login():
         user_id = int(input("Enter ID: "))
         user_name = input("Enter Name: ")
         user_email = input("Enter Email: ")
-        user_role = input("Enter Role (Finance, Manager, ProductManager, Developer, Designer): ")
-        user_password = input("Enter Password: ")
-
+        user_role = input("Enter Role:\n1. Finance\n2. Manager\n3. ProductManager\n4. Developer\n5. Designer: \n")
         roles = ["Finance", "Manager", "ProductManager", "Developer", "Designer"]
         if user_role not in roles:
             print("Invalid role")
             return None
+        user_password = input("Enter Password: ")
+
 
         if user_role == "Developer":
             employee = Developer(user_id, user_name, user_email, user_role, [], [], [])
@@ -319,14 +319,15 @@ def handle_role_action(employee):
             elif choice == "3":
                 show_additional_info = input("Do you want to see additional information like mean salary, string operations, etc.? (yes/no): ")
                 if show_additional_info.lower() == "yes":
-                    print(f"Mean Salary: {mean_salary}, Standard Deviation: {std_salary}")
+                    print(f"Mean Salary: {mean_salary}, Standard Deviation of salary: {std_salary}")
+                    print("Developer's Are: ")
                     print(developer_upper)
                     print(developer_lower)
                     print(developer_replace)
-                    print(f"Factorial of 5 is {factorial_5}")
-                    print(team_members_slice)
-                    print(f"Sum: {sum_array}, Product_ {product_array}")
-                    print(f"Length: {len_text}, Substring: {sub_text}")
+                    print(f"Factorial of 5 employee's is {factorial_5}")
+                    print(f"Some Team Members: {team_members_slice}")
+                    print(f"Employee's completed project : {sum_array}, and there project's product: {product_array}")
+                    print(f"Length of one project's character length is : {len_text}, sub_name of the project: {sub_text}")
             elif choice == "4":
                 employee.view_dashboard()
             elif choice == "5":
@@ -344,7 +345,7 @@ def handle_role_action(employee):
     except Exception as e:
         print(f"An error occurred while handling role actions: {e}")
 
-if __name__ == "__main__":  #Starting point
+if __name__ == "__main__":  #Starting point main
     while True:
         try:
             choice = main_menu()
