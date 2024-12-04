@@ -34,7 +34,7 @@ class Employee(User):
         self.performance_reviews = performance_reviews
 
     def request_leave(self, leave_request):
-        self.leave_requests.append(leave_request)
+        self.leave_requests = leave_request
         print(f"{self.get_id()} requested leave: {leave_request}")
 
     def update_task_status(self, task, status):
@@ -63,7 +63,7 @@ class Finance(User):
         super().__init__(id, name, email, role)
 
     def pay_salary(self, net_salary):
-        print(f"Salary paid: Basic Salary: {net_salary.get_basic_salary()}, Overtime: {net_salary.get_overtime()}, Absentee: {net_salary.get_absentee()}")
+        print(f"Salary paid: {(net_salary.get_basic_salary() + net_salary.get_overtime()) - net_salary.get_absentee()}")
 
 class Net_Salary:
     def __init__(self, basic_salary, overtime, absentee):
@@ -81,10 +81,10 @@ class Net_Salary:
         return self.__absentee
 
     def view_salary(self):
-        print(f"Basic Salary: {self.__basic_salary}, Overtime: {self.__overtime}, Absentee: {self.__absentee}")
+        print(f"Your Total Salary: {self.__basic_salary + self.__overtime - self.__absentee}")
 
     def withdraw_salary(self):
-        print(f"Withdrawing salary: Basic Salary: {self.__basic_salary}, Overtime: {self.__overtime}, Absentee: {self.__absentee}")
+        print(f"Withdrawing salary:{self.__basic_salary + self.__overtime - self.__absentee}")
 
 class Project:
     def __init__(self, title, deadline):
@@ -170,26 +170,8 @@ def factorial(n):
 factorial_5 = factorial(5)
 
 # Slicing
-team_members = ["Alice", "Bob", "Charlie", "Diana"]
+team_members = ["Zishan", "Fahim", "Faria", "Murad"]
 team_members_slice = team_members[1:3]
-
-# Exception Handling
-exception_demo = ""
-try:
-    result = 10 / 0
-except ZeroDivisionError:
-    exception_demo = "Error: Division by zero is not allowed."
-
-# Custom Exception
-class CustomException(Exception):
-    def __init__(self, message):
-        self.message = message
-
-custom_exception_demo = ""
-try:
-    raise CustomException("This is a custom exception")
-except CustomException as e:
-    custom_exception_demo = e.message
 
 # Common Numpy functions
 array = np.array([1, 2, 3, 4, 5])
@@ -198,8 +180,8 @@ product_array = np.prod(array)
 
 # Common string functions
 text = "Hello, World!"
-length_text = len(text)
-substring_text = text[0:5]
+len_text = len(text)
+sub_text = text[0:6]
 
 def main_menu():
     print("\nMain Menu")
@@ -249,10 +231,10 @@ def role_menu(role):
 
 def handle_login():
     try:
-        user_id = int(input("Enter User ID: "))
-        user_name = input("Enter User Name: ")
-        user_email = input("Enter User Email: ")
-        user_role = input("Enter User Role (Finance, Manager, ProductManager, Developer, Designer): ")
+        user_id = int(input("Enter ID: "))
+        user_name = input("Enter Name: ")
+        user_email = input("Enter Email: ")
+        user_role = input("Enter Role (Finance, Manager, ProductManager, Developer, Designer): ")
         user_password = input("Enter Password: ")
 
         roles = ["Finance", "Manager", "ProductManager", "Developer", "Designer"]
@@ -287,6 +269,7 @@ def handle_role_action(employee):
         role = type(employee).__name__
         while True:
             choice = role_menu(role)
+            
             if choice == "1":
                 if role in ["Developer", "Designer"]:
                     project_name = input("Enter the project you are working on: ").strip().lower()
@@ -319,6 +302,7 @@ def handle_role_action(employee):
                     net_salary = Net_Salary(net_salary_basic, net_salary_overtime, net_salary_absentee)
                     net_salary.view_salary()
                     employee.pay_salary(net_salary)
+
             elif choice == "2":
                 if role in ["Developer", "Designer", "Manager", "ProductManager", "Finance"]:
                     net_salary_basic = float(input("Enter Basic Salary: "))
@@ -341,10 +325,8 @@ def handle_role_action(employee):
                     print(developer_replace)
                     print(f"Factorial of 5 is {factorial_5}")
                     print(team_members_slice)
-                    print(exception_demo)
-                    print(custom_exception_demo)
                     print(f"Sum: {sum_array}, Product_ {product_array}")
-                    print(f"Length: {length_text}, Substring: {substring_text}")
+                    print(f"Length: {len_text}, Substring: {sub_text}")
             elif choice == "4":
                 employee.view_dashboard()
             elif choice == "5":
