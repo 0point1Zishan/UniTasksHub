@@ -344,7 +344,7 @@ def handle_role_action(employee):
     except Exception as e:
         print(f"An error occurred while handling role actions: {e}")
 
-if __name__ == "__main__":
+if __name__ == "__main__":  #Starting point
     while True:
         try:
             choice = main_menu()
