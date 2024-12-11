@@ -1,362 +1,590 @@
+import json
+import os
 import numpy as np
 
-# Encapsulation and Abstraction
-class User:
-    def __init__(self, id, name, email, role):
-        self.__id = id
-        self.__name = name
-        self.__email = email
-        self.__role = role
+# Employee data
+employee = {}
+departments = {'Manager', 'Developer', 'Designer', 'Finance'}
+employee_data = "employee_data.json"
 
-    def login(self, password):
-        if password == "password123":
-            print(f"{self.__name} has logged in.")
-            return True
+# Predefined salaries by department
+department_salaries = {"Manager": 80000, "Developer": 60000, "Designer": 50000, "Finance": 55000}
+
+# Salary payments and leave requests
+salary_payments = []
+leave_requests = []
+
+# Projects with assigned employees
+projects = {"Project A": [], "Project B": []}
+
+# Load employee data from file if it exists
+if os.path.exists(employee_data):
+    with open(employee_data, "r") as f:
+        employee = json.load(f)
+
+# Base class for employees
+class Employee:
+    def __init__(self, username, full_name, email, department, cv_filename):
+        self.username = username
+        self.full_name = full_name
+        self.email = email
+        self.department = department
+        self.cv_filename = cv_filename
+
+#-------------------------------------------------Manager Class-----------------------------------------------------
+
+class Manager(Employee):
+    def __init__(self, username, full_name, email, department, cv_filename):
+        super().__init__(username, full_name, email, department, cv_filename)
+
+    def manager_menu(self, projects, leave_requests):
+        while True:
+            print("\n=== Manager Menu ===")
+            print("1. Show Ongoing Projects")
+            print("2. Add a Project")
+            print("3. Employee List")
+            print("4. Show Leave Requests")
+            print("5. Show Company Details")
+            print("6. Sign Out")
+
+            choice = input("Enter your choice: ").strip()
+            if choice == "1":
+                self.show_ongoing_projects(projects)
+            elif choice == "2":
+                self.add_project(projects)
+            elif choice == "3":
+                self.show_employee_list(employee)  # Pass 'employee' to the method
+            elif choice == "4":
+                self.show_leave_requests(leave_requests)
+            elif choice == "5":
+                self.show_company_details()
+            elif choice == "6":
+                print(f"👋 Goodbye, {self.full_name}!")
+                break
+            else:
+                print("⚠️ Invalid choice. Please try again.")
+
+    def show_ongoing_projects(self, projects):
+        print("\n=== Ongoing Projects ===")
+        for project, employees in projects.items():
+            print(f"- Project: {project}")
+            print(f"  Assigned Employees: {', '.join(employees) if employees else 'None'}")
+        print("---------------------------------")
+
+    def add_project(self, projects):
+        print("\n=== Add a New Project ===")
+        project_name = input("Enter the project name: ").strip()
+        if project_name in projects:
+            print(f"⚠️ Project '{project_name}' already exists.")
         else:
-            print("Invalid password.")
-            return False
+            projects[project_name] = []
+            print(f"✅ Project '{project_name}' added successfully.")
+        print("---------------------------------")
 
-    def view_dashboard(self):
-        print(f"{self.__name}'s Dashboard")
+    def show_employee_list(self, employees):
+        print("\n=== Employee List ===")
+        if not employees:
+            print("⚠️ No employees found.")
+        else:
+            for i, (username, details) in enumerate(employees.items(), 1):
+                print(f"{i}. Full Name: {details['full_name']}")
+                print(f"   Email: {details['email']}")
+                print(f"   Department: {details['department']}")
+                assigned_projects = [project for project, emps in projects.items() if username in emps]
+                print(f"   Working on: {', '.join(assigned_projects) if assigned_projects else 'None'}")
+                print(f"   CV File: {details['cv_filename']}")
+                print("---------")
+        print("---------------------------------")
 
-    # Getter and Setter methods for encapsulated attributes
-    def get_id(self):
-        return self.__id
+    def show_leave_requests(self, leave_requests):
+        print("\n=== Leave Requests ===")
+        if not leave_requests:
+            print("⚠️ No leave requests found.")
+        else:
+            for i, request in enumerate(leave_requests, 1):
+                print(f"{i}. Employee: {request['employee_name']}")
+                print(f"   Reason: {request['reason']}")
+                print("---------")
 
-    def set_id(self, id):
-        self.__id = id
+            while True:
+                print("\nOptions:")
+                print("1. Accept a leave request")
+                print("2. Reject a leave request")
+                print("3. Exit")
+                choice = input("Enter your choice: ").strip()
 
-class Employee(User):
-    def __init__(self, id, name, email, role, tasks, leave_requests, performance_reviews):
-        super().__init__(id, name, email, role)
-        self.tasks = tasks
-        self.leave_requests = leave_requests
-        self.performance_reviews = performance_reviews
+                if choice == "1":
+                    try:
+                        index = int(input("Enter the leave request number to accept: ").strip())
+                        if 1 <= index <= len(leave_requests):
+                            accepted_request = leave_requests.pop(index - 1)
+                            print(f"✅ Leave request from {accepted_request['employee_name']} has been accepted.")
+                        else:
+                            print("⚠️ Invalid request number.")
+                    except ValueError:
+                        print("⚠️ Please enter a valid number.")
 
-    def request_leave(self, leave_request):
-        self.leave_requests = leave_request
-        print(f"{self.get_id()} requested leave: {leave_request}")
+                elif choice == "2":
+                    try:
+                        index = int(input("Enter the leave request number to reject: ").strip())
+                        if 1 <= index <= len(leave_requests):
+                            rejected_request = leave_requests.pop(index - 1)
+                            print(f"🚫 Leave request from {rejected_request['employee_name']} has been rejected.")
+                        else:
+                            print("⚠️ Invalid request number.")
+                    except ValueError:
+                        print("⚠️ Please enter a valid number.")
 
-    def update_task_status(self, task, status):
-        task.update_status(status)
-        print(f"{self.get_id()} updated task {task.title} status to {status}")
+                elif choice == "3":
+                    print("Exiting leave request management.")
+                    break
 
-class Manager(User):
-    def __init__(self, id, name, email, role, team):
-        super().__init__(id, name, email, role)
-        self.team = team
+                else:
+                    print("⚠️ Invalid choice. Please try again.")
 
-    def add_team_member(self, member):
-        self.team.append(member)
-        print(f"Added {member} to team")
+        print("---------------------------------")
 
-class Designer(Employee):
-    def work(self):
-        print("Designing UI...")
+    def show_company_details(self):
+        print("\n=== Company Details ===")
+        company_name = "TechCorp"
+        description = "A leading company in tech innovation and employee satisfaction."
+        departments = np.array(["Manager", "Developer", "Designer", "Finance"])
+
+        print(f"Company Name: {company_name}")
+        print(f"Description: {description}")
+
+        print(f"Departments: {', '.join(departments)}") 
+
+        print(f"Number of Departments: {len(departments)}") 
+
+        print(f"Company Name (Uppercase): {company_name.upper()}")
+
+        company_location = ("Dhaka", "Bangladesh")
+        print(f"Company Location: {', '.join(company_location)}")
+
+        company_values = ["Innovation", "Integrity", "Customer Focus"]
+        print(f"Company Values: {', '.join(company_values)}")
+
+        print("---------------------------------") 
+
+#-------------------------------------------------Developer Class-----------------------------------------------------
 
 class Developer(Employee):
-    def work(self):
-        print("Writing code...")
-
-class Finance(User):
-    def __init__(self, id, name, email, role):
-        super().__init__(id, name, email, role)
-
-    def pay_salary(self, net_salary):
-        print(f"Salary paid: {(net_salary.get_basic_salary() + net_salary.get_overtime()) - net_salary.get_absentee()}")
-
-class Net_Salary:
-    def __init__(self, basic_salary, overtime, absentee):
-        self.__basic_salary = basic_salary
-        self.__overtime = overtime
-        self.__absentee = absentee
-
-    def get_basic_salary(self):
-        return self.__basic_salary
-
-    def get_overtime(self):
-        return self.__overtime
-
-    def get_absentee(self):
-        return self.__absentee
-
-    def view_salary(self):
-        print(f"Your Total Salary: {(self.__basic_salary + self.__overtime) - self.__absentee}")
-
-    def withdraw_salary(self):
-        print(f"Withdrawing salary:{(self.__basic_salary + self.__overtime) - self.__absentee}")
-
-class Project:
-    def __init__(self, title, deadline):
-        self.title = title
-        self.deadline = deadline
-        #set
-        self.team_members = set()
-
-    def start_project(self):
-        print(f"Project {self.title} started.")
-
-    def complete_project(self):
-        print(f"Project {self.title} completed.")
-
-    def add_team_member(self, member):
-        self.team_members.add(member)
-        print(f"Added {member} to project {self.title}")
-
-class Task:
-    def __init__(self, task_id, title, description, assigned_to, status):
-        self.task_id = task_id
-        self.title = title
-        self.description = description
-        self.assigned_to = assigned_to
-        self.status = status
-
-    def update_status(self, status):
-        self.status = status
-        print(f"Task {self.task_id} status updated to {self.status}")
-
-    def add_comment(self, comment):
-        print(f"Comment added to task {self.task_id}: {comment}")
-
-class PerformanceReview:
-    def __init__(self, review_id, metrics, comments, score):
-        self.review_id = review_id
-        self.metrics = metrics
-        self.comments = comments
-        self.score = score
-
-    def generate_report(self):
-        print(f"Performance report for review {self.review_id}: Metrics: {self.metrics}, Score: {self.score}")
-
-    def add_feedback(self, feedback):
-        print(f"Feedback added to review {self.review_id}: {feedback}")
-
-class ProductManager(Manager):
-    def assign_task(self, task):
-        task.assigned_to = self.team
-        print(f"Task {task.title} assigned to team")
-
-    def evaluate_performance(self, review):
-        review.generate_report()
-
-# Dictionary
-projects = {
-    "project1": Project("Website Redesign", "2024-12-31"),
-    "project2": Project("Mobile App Development", "2025-06-30")
-}
-
-# Lambda functions
-calculate_overtime_payment = lambda hours, rate: hours * rate
-calculate_absentee_penalty = lambda days, rate: days * rate
-
-# Numpy
-salaries = np.array([3000, 3200, 2800, 2900])
-mean_salary = np.mean(salaries)
-std_salary = np.std(salaries)
-
-# String
-developer = "Full Stack Developer"
-developer_upper = developer.upper()
-developer_lower = developer.lower()
-developer_replace = developer.replace("Full", "Junior")
-
-# recursion
-def factorial(n):
-    if n == 0:
-        return 1
-    else:
-        return n * factorial(n-1)
-
-factorial_5 = factorial(5)
-
-# Slicing
-team_members = ["Zishan", "Fahim", "Faria", "Murad"]
-team_members_slice = team_members[1:3]
-
-# Common Numpy functions
-array = np.array([1, 2, 3, 4, 5])
-sum_array = np.sum(array)
-product_array = np.prod(array)
-
-# Common string functions
-developer = "Zishan Sarkar Murad"
-len_text = len(developer)
-sub_text = developer[0:7]
-
-def main_menu():
-    print("\nMain Menu")
-    print("1. Login")
-    print("2. Exit")
-    choice = input("Enter your choice: ")
-    return choice
-
-def role_menu(role):
-    if role == "Developer":
-        print("\nDeveloper Menu")
-        print("1. Work on a project")
-        print("2. View/Withdraw salary")
-        print("3. View additional information")
-        print("4. View Dashboard")
-        print("5. Request leave")
-        print("6. Exit")
-    elif role == "Designer":
-        print("\nDesigner Menu")
-        print("1. Work on a project")
-        print("2. View/Withdraw salary")
-        print("3. View additional information")
-        print("4. View Dashboard")
-        print("5. Request leave")
-        print("6. Exit")
-    elif role == "Manager":
-        print("\nManager Menu")
-        print("1. Manage a team")
-        print("2. View/Withdraw salary")
-        print("3. View additional information")
-        print("4. View Dashboard")
-        print("5. Exit")
-    elif role == "ProductManager":
-        print("\nProduct Manager Menu")
-        print("3. View additional information")
-        print("4. View Dashboard")
-        print("5. Exit")
-    elif role == "Finance":
-        print("\nFinance Menu")
-        print("1. Pay salary")
-        print("2. View/Withdraw salary")
-        print("3. View additional information")
-        print("4. View Dashboard")
-        print("5. Exit")
-    choice = input("Enter your choice: ")
-    return choice
-
-def handle_login():
-    try:
-        user_id = int(input("Enter ID: "))
-        user_name = input("Enter Name: ")
-        user_email = input("Enter Email: ")
-        user_role = input("Enter Role:\n1. Finance\n2. Manager\n3. ProductManager\n4. Developer\n5. Designer: \n")
-        roles = ["Finance", "Manager", "ProductManager", "Developer", "Designer"]
-        if user_role not in roles:
-            print("Invalid role")
-            return None
-        user_password = input("Enter Password: ")
-
-
-        if user_role == "Developer":
-            employee = Developer(user_id, user_name, user_email, user_role, [], [], [])
-        elif user_role == "Designer":
-            employee = Designer(user_id, user_name, user_email, user_role, [], [], [])
-        elif user_role == "Manager":
-            employee = Manager(user_id, user_name, user_email, user_role, [])
-        elif user_role == "ProductManager":
-            employee = ProductManager(user_id, user_name, user_email, user_role, [])
-        elif user_role == "Finance":
-            employee = Finance(user_id, user_name, user_email, user_role)
-        else:
-            print("Invalid role")
-            return None
-
-        if not employee.login(user_password):
-            return None
-        else:
-            return employee
-    except Exception as e:
-        print(f"An error occurred during login: {e}")
-        return None
-
-def handle_role_action(employee):
-    try:
-        role = type(employee).__name__
+    def developer_designer_menu(self, projects, leave_requests):
         while True:
-            choice = role_menu(role)
-            
-            if choice == "1":
-                if role in ["Developer", "Designer"]:
-                    project_name = input("Enter the project you are working on: ").strip().lower()
-                    if project_name in [name.lower() for name in projects.keys()]:
-                        project = projects[[name for name in projects if name.lower() == project_name][0]]
-                        task_id = input("Enter Task ID: ")
-                        task_title = input("Enter Task Title: ")
-                        task_desc = input("Enter Task Description: ")
-                        task_status = input("Enter Task Status: ")
-                        task = Task(task_id, task_title, task_desc, employee.get_id(), "In Progress")
-                        employee.update_task_status(task, task_status)
-                        project.add_team_member(employee.get_id())
-                    else:
-                        print("Invalid project name.")
-                elif role == "Manager":
-                    team_member = input("Enter team member to add: ")
-                    employee.add_team_member(team_member)
-                elif role == "ProductManager":
-                    project_name = input("Enter the project you are managing: ").strip().lower()
-                    if project_name in [name.lower() for name in projects.keys()]:
-                        project = projects[[name for name in projects if name.lower() == project_name][0]]
-                        project.start_project()
-                        project.complete_project()
-                    else:
-                        print("Invalid project name.")
-                elif role == "Finance":
-                    net_salary_basic = float(input("Enter Basic Salary: "))
-                    net_salary_overtime = float(input("Enter Overtime Amount: "))
-                    net_salary_absentee = float(input("Enter Absentee Amount: "))
-                    net_salary = Net_Salary(net_salary_basic, net_salary_overtime, net_salary_absentee)
-                    net_salary.view_salary()
-                    employee.pay_salary(net_salary)
+            print(f"\n=== {self.department} Menu ===")
+            print("1. Work on a Project")
+            print("2. Request Leave")
+            print("3. Cancel Leave Request")
+            print("4. View Leave Requests Count")
+            print("5. Sign Out")
 
+            choice = input("Enter your choice: ").strip()
+            if choice == "1":
+                self.work_on_project(self.username, projects)
             elif choice == "2":
-                if role in ["Developer", "Designer", "Manager", "ProductManager", "Finance"]:
-                    net_salary_basic = float(input("Enter Basic Salary: "))
-                    net_salary_overtime = float(input("Enter Overtime Amount: "))
-                    net_salary_absentee = float(input("Enter Absentee Amount: "))
-                    net_salary = Net_Salary(net_salary_basic, net_salary_overtime, net_salary_absentee)
-                    view_or_withdraw = input("Do you want to view or withdraw salary? (view/withdraw): ")
-                    if view_or_withdraw == "view":
-                        net_salary.view_salary()
-                    elif view_or_withdraw == "withdraw":
-                        net_salary.withdraw_salary()
-                    else:
-                        print("Invalid option")
+                self.request_leave(self.username, leave_requests)
             elif choice == "3":
-                show_additional_info = input("Do you want to see additional information like mean salary, string operations, etc.? (yes/no): ")
-                if show_additional_info.lower() == "yes":
-                    print(f"Mean Salary: {mean_salary}, Standard Deviation of salary: {std_salary}")
-                    print("Developer's Are: ")
-                    print(developer_upper)
-                    print(developer_lower)
-                    print(developer_replace)
-                    print(f"Factorial of 5 employee's is {factorial_5}")
-                    print(f"Some Team Members: {team_members_slice}")
-                    print(f"Employee's completed project : {sum_array}, and there project's product: {product_array}")
-                    print(f"Length of one project's character length is : {len_text}, sub_name of the project: {sub_text}")
+                self.cancel_leave_request(self.username, leave_requests)
             elif choice == "4":
-                employee.view_dashboard()
+                self.view_leave_requests_count(self.username, leave_requests)
             elif choice == "5":
-                if role in ["Developer", "Designer"]:
-                    leave_request = input("Enter leave request details: ")
-                    employee.request_leave(leave_request)
-                else:
-                    print("Exiting to main menu...")
-                    break
-            elif choice == "6":
-                print("Exiting to main menu...")
+                print(f"Goodbye, {self.full_name}!")
                 break
             else:
-                print("Invalid choice. Please try again.")
-    except Exception as e:
-        print(f"An error occurred while handling role actions: {e}")
+                print("⚠️ Invalid choice. Please try again.")
 
-if __name__ == "__main__":  #Starting point main
-    while True:
-        try:
-            choice = main_menu()
+    def work_on_project(self, username, projects):
+        print("\n=== Work on a Project ===")
+        print("Available Projects:")
+        for project in projects.keys():
+            print(f"- {project}")
+
+        project_name = input("Enter the project to work on: ").strip()
+        if project_name in projects:
+            if username in projects[project_name]:
+                print(f"⚠️ You are already assigned to {project_name}.")
+            else:
+                projects[project_name].append(username)
+                print(f"✅ Successfully assigned to {project_name}.")
+        else:
+            print("⚠️ Project not found.")
+
+    def request_leave(self, username, leave_requests):
+        print("\n=== Request Leave ===")
+        reason = input("Enter the reason for leave: ").strip()
+        leave_requests.append({
+            "employee_name": employee[username]["full_name"],
+            "username": username,
+            "reason": reason
+        })
+        print("✅ Leave request submitted successfully.")
+
+    def cancel_leave_request(self, username, leave_requests):
+        print("\n=== Cancel Leave Request ===")
+        user_requests = [req for req in leave_requests if req["username"] == username]
+        if not user_requests:
+            print("⚠️ No leave requests to cancel.")
+            return
+
+        print("Your Leave Requests:")
+        for i, req in enumerate(user_requests, 1):
+            print(f"{i}. Reason: {req['reason']}")
+
+        choice = input("Enter the number of the leave request to cancel: ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(user_requests):
+            request_to_cancel = user_requests[int(choice) - 1]
+            leave_requests.remove(request_to_cancel)
+            print("✅ Leave request canceled successfully.")
+        else:
+            print("⚠️ Invalid choice. Please try again.")
+
+    def view_leave_requests_count(self, username, leave_requests):
+        count = sum(1 for req in leave_requests if req["username"] == username)
+        print(f"\nYou have submitted {count} leave request(s).")
+
+
+
+# class Developer(Employee):
+#     def __init__(self, username, full_name, email, department, cv_filename):
+#         super().__init__(username, full_name, email, department, cv_filename)
+
+#     def developer_designer_menu(self, projects, leave_requests):
+#         while True:
+#             print(f"\n=== {self.department} Menu ===")
+#             print("1. Work on a Project")
+#             print("2. Request Leave")
+#             print("3. Sign Out")
+
+#             choice = input("Enter your choice: ").strip()
+#             if choice == "1":
+#                 self.work_on_project(self.username, projects)
+#             elif choice == "2":
+#                 self.request_leave(self.username, leave_requests)
+#             elif choice == "3":
+#                 print(f"👋 Goodbye, {self.full_name}!")
+#                 break
+#             else:
+#                 print("⚠️ Invalid choice. Please try again.")
+
+#     def work_on_project(self, username, projects):
+#         print("\n=== Work on a Project ===")
+#         print("Available Projects:")
+#         for project in projects.keys():
+#             print(f"- {project}")
+
+#         project_name = input("Enter the project to work on: ").strip()
+#         if project_name in projects:
+#             if username in projects[project_name]:
+#                 print(f"⚠️ You are already assigned to {project_name}.")
+#             else:
+#                 projects[project_name].append(username)
+#                 print(f"✅ Successfully assigned to {project_name}.")
+#         else:
+#             print("⚠️ Project not found.")
+
+#     def request_leave(self, username, leave_requests):
+#         print("\n=== Request Leave ===")
+#         reason = input("Enter the reason for leave: ").strip()
+#         leave_requests.append({
+#             "employee_name": employee[username]["full_name"],
+#             "reason": reason
+#         })
+#         print("✅ Leave request submitted successfully.")
+
+    
+#-------------------------------------------------Designer Class-----------------------------------------------------
+
+# class Designer(Employee):
+#     def __init__(self, username, full_name, email, department, cv_filename):
+#         super().__init__(username, full_name, email, department, cv_filename)
+
+#     def developer_designer_menu(self, projects, leave_requests):
+#         while True:
+#             print(f"\n=== {self.department} Menu ===")
+#             print("1. Work on a Project")
+#             print("2. Request Leave")
+#             print("3. Sign Out")
+
+#             choice = input("Enter your choice: ").strip()
+#             if choice == "1":
+#                 self.work_on_project(self.username, projects)
+#             elif choice == "2":
+#                 self.request_leave(self.username, leave_requests)
+#             elif choice == "3":
+#                 print(f"👋 Goodbye, {self.full_name}!")
+#                 break
+#             else:
+#                 print("⚠️ Invalid choice. Please try again.")
+
+#     def work_on_project(self, username, projects):
+#         print("\n=== Work on a Project ===")
+#         print("Available Projects:")
+#         for project in projects.keys():
+#             print(f"- {project}")
+
+#         project_name = input("Enter the project to work on: ").strip()
+#         if project_name in projects:
+#             if username in projects[project_name]:
+#                 print(f"⚠️ You are already assigned to {project_name}.")
+#             else:
+#                 projects[project_name].append(username)
+#                 print(f"✅ Successfully assigned to {project_name}.")
+#         else:
+#             print("⚠️ Project not found.")
+
+#     def request_leave(self, username, leave_requests):
+#         print("\n=== Request Leave ===")
+#         reason = input("Enter the reason for leave: ").strip()
+#         leave_requests.append({
+#             "employee_name": employee[username]["full_name"],
+#             "reason": reason
+#         })
+#         print("✅ Leave request submitted successfully.")
+
+
+class Designer(Employee):
+    def __init__(self, username, full_name, email, department, cv_filename):
+        super().__init__(username, full_name, email, department, cv_filename)
+
+    def developer_designer_menu(self, projects, leave_requests):
+        while True:
+            print(f"\n=== {self.department} Menu ===")
+            print("1. Work on a Project")
+            print("2. Request Leave")
+            print("3. Cancel Leave Request")
+            print("4. View Leave Requests Count")
+            print("5. Sign Out")
+
+            choice = input("Enter your choice: ").strip()
             if choice == "1":
-                employee = handle_login()
-                if employee:
-                    handle_role_action(employee)
+                self.work_on_project(self.username, projects)
             elif choice == "2":
-                print("Goodbye!")
+                self.request_leave(self.username, leave_requests)
+            elif choice == "3":
+                self.cancel_leave_request(self.username, leave_requests)
+            elif choice == "4":
+                self.view_leave_requests_count(self.username, leave_requests)
+            elif choice == "5":
+                print(f"👋 Goodbye, {self.full_name}!")
                 break
             else:
-                print("Invalid choice. Please try again.")
-        except Exception as e:
-            print(f"An error occurred in the main loop: {e}")
+                print("⚠️ Invalid choice. Please try again.")
+
+    def work_on_project(self, username, projects):
+        print("\n=== Work on a Project ===")
+        print("Available Projects:")
+        for project in projects.keys():
+            print(f"- {project}")
+
+        project_name = input("Enter the project to work on: ").strip()
+        if project_name in projects:
+            if username in projects[project_name]:
+                print(f"⚠️ You are already assigned to {project_name}.")
+            else:
+                projects[project_name].append(username)
+                print(f"✅ Successfully assigned to {project_name}.")
+        else:
+            print("⚠️ Project not found.")
+
+    def request_leave(self, username, leave_requests):
+        print("\n=== Request Leave ===")
+        reason = input("Enter the reason for leave: ").strip()
+        leave_requests.append({
+            "employee_name": employee[username]["full_name"],
+            "username": username,
+            "reason": reason
+        })
+        print("✅ Leave request submitted successfully.")
+
+    def cancel_leave_request(self, username, leave_requests):
+        print("\n=== Cancel Leave Request ===")
+        user_requests = [req for req in leave_requests if req["username"] == username]
+        if not user_requests:
+            print("⚠️ No leave requests to cancel.")
+            return
+
+        print("Your Leave Requests:")
+        for i, req in enumerate(user_requests, 1):
+            print(f"{i}. Reason: {req['reason']}")
+
+        choice = input("Enter the number of the leave request to cancel: ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(user_requests):
+            request_to_cancel = user_requests[int(choice) - 1]
+            leave_requests.remove(request_to_cancel)
+            print("✅ Leave request canceled successfully.")
+        else:
+            print("⚠️ Invalid choice. Please try again.")
+
+    def view_leave_requests_count(self, username, leave_requests):
+        count = sum(1 for req in leave_requests if req["username"] == username)
+        print(f"\nYou have submitted {count} leave request(s).")
+
+
+#-------------------------------------------------Finance Class-----------------------------------------------------
+class Finance(Employee):
+    def __init__(self, username, full_name, email, department, cv_filename):
+        super().__init__(username, full_name, email, department, cv_filename)
+
+    def finance_menu(self, salary_payments, department_salaries):
+        while True:
+            print("\n=== Finance Menu ===")
+            print("1. Pay Salary")
+            print("2. View Salary Payment Details")
+            print("3. Sign Out")
+
+            choice = input("Enter your choice: ").strip()
+            if choice == "1":
+                self.pay_salary(salary_payments, department_salaries)
+            elif choice == "2":
+                self.view_salary_details(salary_payments)
+            elif choice == "3":
+                print(f"👋 Goodbye, {self.full_name}!")
+                break
+            else:
+                print("⚠️ Invalid choice. Please try again.")
+
+    def pay_salary(self, salary_payments, department_salaries):
+        print("\n=== Pay Salary ===")
+        username = input("Enter the username of the employee to pay: ").strip()
+        if username not in employee:
+            print("⚠️ Employee not found. Please check the username.")
+            return
+
+        emp = employee[username]
+        department = emp["department"]
+        salary = department_salaries[department]
+
+        salary_payments.append({
+            "employee_name": emp["full_name"],
+            "username": username,
+            "email": emp["email"],
+            "amount": salary,
+            "department": department
+        })
+        print(f"💵 Salary of ${salary} has been paid to {emp['full_name']} ({department}).")
+
+    def view_salary_details(self, salary_payments):
+        print("\n=== Salary Payment Details ===")
+        if not salary_payments:
+            print("⚠️ No salary payments recorded.")
+        else:
+            for i, payment in enumerate(salary_payments, 1):
+                print(f"{i}. {payment['employee_name']} ({payment['username']}) - ${payment['amount']}")
+                print(f"   Email: {payment['email']}, Department: {payment['department']}")
+                print("----------")
+
+# -------------------------------------------------- Sign-Up --------------------------------------------------
+def sign_up():
+    print("\n=== Sign-Up Portal ===")
+    while True:
+        full_name = input("Enter your full name: ").strip()
+        username = input("Choose a username: ").strip()
+        if username in employee:
+            print("⚠️ Username already exists. Please try a different one.")
+            continue
+
+        password = input("Create a password: ").strip()
+        email = input("Enter your email address: ").strip()
+        if "@" not in email:
+            print("⚠️ Invalid email address. Please enter a valid email.")
+            continue
+
+        department = input(f"Select your department {departments}: ").strip()
+        if department not in departments:
+            print("⚠️ Invalid department. Please choose from the given options.")
+            continue
+
+        cv_filename = input("Upload your CV (enter file name): ").strip()
+        if not os.path.exists(cv_filename):
+            print("⚠️ CV file not found. Please upload a valid file.")
+            continue
+
+        # Save new user to the dictionary
+        employee[username] = {
+            "full_name": full_name,
+            "password": password,
+            "email": email,
+            "department": department,
+            "cv_filename": cv_filename
+        }
+
+        # Save data to file
+        with open(employee_data, "w") as f:
+            json.dump(employee, f)
+
+        print(f"✅ Sign-Up successful! Welcome, {full_name}.")
+        return username
+
+# -------------------------------------------------- Log-In --------------------------------------------------
+def log_in():
+    print("\n=== Log-In Portal ===")
+    while True:
+        username = input("Enter your username: ").strip()
+        password = input("Enter your password: ").strip()
+
+        if username in employee and employee[username]["password"] == password:
+            print(f"✅ Welcome back, {employee[username]['full_name']}!")
+            return username
+        else:
+            print("⚠️ Invalid username or password. Please try again.")
+
+#------------------------------------------------------Main Menu------------------------------------------
+def main_menu():
+    while True:
+        print("\n=== TechCorp Pro ===")
+        print("1. Log In")
+        print("2. Sign Up")
+        print("3. Exit")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            user = log_in()
+            if user:
+                dep = employee[user]["department"]
+                if dep == "Manager":
+                    employee_obj = Manager(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    employee_obj.manager_menu(projects, leave_requests) 
+                elif dep == "Finance":
+                    employee_obj = Finance(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    employee_obj.finance_menu(salary_payments, department_salaries) 
+                elif dep in {"Developer", "Designer"}:
+                    if dep == "Developer":
+                        employee_obj = Developer(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    else: 
+                        employee_obj = Designer(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    employee_obj.developer_designer_menu(projects, leave_requests) 
+                else:
+                    print("⚠️ Role-specific functionalities for your department are not yet implemented.")
+
+        elif choice == "2":
+            user = sign_up()
+            if user:
+                dep = employee[user]["department"]
+                if dep == "Manager":
+                    employee_obj = Manager(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    employee_obj.manager_menu(projects, leave_requests) 
+                elif dep == "Finance":
+                    employee_obj = Finance(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    employee_obj.finance_menu(salary_payments, department_salaries) 
+                elif dep in {"Developer", "Designer"}:
+                    if dep == "Developer":
+                        employee_obj = Developer(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    else: 
+                        employee_obj = Designer(user, employee[user]["full_name"], employee[user]["email"], dep, employee[user]["cv_filename"])
+                    employee_obj.developer_designer_menu(projects, leave_requests) 
+                else:
+                    print("⚠️ Role-specific functionalities for your department are not yet implemented.")
+
+        elif choice == "3":
+            print("👋 Goodbye! Have a great day!")
+            break
+
+        else:
+            print("⚠️ Invalid choice. Please try again.")
+
+
+
+if __name__ == "__main__":
+    main_menu()
