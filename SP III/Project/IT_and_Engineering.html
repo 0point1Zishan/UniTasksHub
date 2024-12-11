@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT & Engineering Department</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            background-image: url(https://t4.ftcdn.net/jpg/02/61/80/83/360_F_261808361_w1DKo49GK5RWiJhPvQym5Q7ITBpDYGnK.jpg);
+             background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid white;
+        }
+
+        header h1 {
+            font-size: 40px;
+        }
+
+        /* Container */
+        .project-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Project Card */
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        /* Project Manager Image */
+        .manager-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .manager-section img {
+            width: 100px;
+            height: 100px;
+            border: 2px solid white;
+        }
+
+        /* Employee List */
+        .employee-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .employee-list li {
+            margin-bottom: 5px;
+        }
+
+        /* Circular Progress */
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#00ff00 calc(var(--progress) * 1%), #fff0 calc(var(--progress) * 1%));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+        }
+
+        .progress-circle span {
+            font-size: 20px;
+            color: white;
+        }
+
+        /* Timer Design */
+        .timer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .timer span {
+            display: inline-block;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>IT & Engineering Department</h1>
+        <p>Overview of ongoing projects</p>
+    </header>
+
+    <div class="project-container">
+        <!-- Project 1 -->
+        <div class="project-card">
+            <h2>Gemini 2.0</h2>
+            <div class="manager-section">
+                <img src="https://scontent.fdac177-1.fna.fbcdn.net/v/t39.30808-6/348662746_264659889277797_7782522749481335250_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeHZh_pdPC8xCtO7qrHrxSbdCzrlzy_XXfgLOuXPL9dd-FRIBPRgujtwbcnruXSn-YLRxHP0PW_hXhdfhKw2uPzc&_nc_ohc=3YwehPaYxOcQ7kNvgHJg83D&_nc_zt=23&_nc_ht=scontent.fdac177-1.fna&_nc_gid=Awi0RLXQl70Dzy8o59u-pkL&oh=00_AYCtH57DsS2gOvbRwyQnUttLtCAWPbIWo5pAGvmvsGWB2Q&oe=675EC31C" alt="Project Manager">
+                <p><strong>Project Manager:</strong> Fahim Shahriar Sakib</p>
+            </div>
+            <p><strong>Employees and Expertise:</strong></p>
+            <ul class="employee-list">
+                <li>Shuaib Ameer - Data Scientist</li>
+                <li>Sheikh Saadi - Data Analyst</li>
+                <li>Zahidul Kabir: Machine Learning Engineer</li>
+                <li>Shoron Ahmed - AI Developer</li>
+                <li>Md. Ononto - Data Engineer</li>
+                <li>Ferdous Khan - Deep Learning Engineer</li>
+            </ul>
+            <p><strong>Estimated Budget:</strong> $50,000,000</p>
+            <p><strong>Total Expense:</strong> $20,000,000</p>
+            <div class="progress-circle" style="--progress: 60;">
+                <span>60%</span>
+            </div>
+            <div class="timer">
+                <span>Total Days: 120</span>
+                <span>Days Left: 48</span>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+            <h2>New Pixel Brand Development</h2>
+            <div class="manager-section">
+                <img src="https://cdn1.intermiami.news/uploads/52/2024/03/GettyImages-2082200567-1140x760.jpg" alt="Project Manager">
+                <p><strong>Project Manager:</strong> Lional Messi</p>
+            </div>
+            <p><strong>Employees and Expertise:</strong></p>
+            <ul class="employee-list">
+                <li>Luis Suarez - Product Design</li>
+                <li>Neymer Jr. - Marketing Strategy</li>
+                <li>Julien Alvarez - Manufacturing Engineering</li>
+            </ul>
+            <p><strong>Estimated Budget:</strong> $32,000,000</p>
+            <p><strong>Total Expense:</strong> $14,000,000</p>
+            <div class="progress-circle" style="--progress: 70;">
+                <span>70%</span>
+            </div>
+            <div class="timer">
+                <span>Total Days: 150</span>
+                <span>Days Left: 45</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

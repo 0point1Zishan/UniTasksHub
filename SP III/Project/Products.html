@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Products</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            background-color: #f4f4f4;
+            color: black;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            background-color: grey;
+        }
+
+        header h1 {
+            font-size: 35px;
+            color: black;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: black;
+        }
+
+        /* Main Section */
+        .main-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Product Row */
+        .product-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+        }
+
+        /* Product Box */
+        .product-box {
+            background: #fff;
+            width: 30%;
+            padding: 25px; /* Added padding inside the box */
+            margin: 15px 0; /* Added margin between boxes */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-box:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Google's Top 9 Products</h1>
+        <p>Explore the innovative products and services offered by Google.</p>
+    </header>
+
+    <div class="main-section">
+        <!-- Product Row 1 -->
+        <div class="product-row">
+            <div class="product-box">
+                <img src="https://static.independent.co.uk/2024/08/22/11/Pixel-9.jpg?width=1200" alt="Google Pixel">
+                <h3>Google Pixel</h3>
+            </div>
+            <div class="product-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Google_Home_with_Home_Hub_and_Home_Mini_on_table.jpg/800px-Google_Home_with_Home_Hub_and_Home_Mini_on_table.jpg" alt="Google Home">
+                <h3>Google Home</h3>
+            </div>
+            <div class="product-box">
+                <img src="https://static-00.iconduck.com/assets.00/google-cloud-icon-1024x823-wiwlyizc.png" alt="Google Cloud">
+                <h3>Google Cloud</h3>
+            </div>
+        </div>
+
+        <!-- Product Row 2 -->
+        <div class="product-row">
+            <div class="product-box">
+                <img src="https://play-lh.googleusercontent.com/QRRGW2tMZ4-FNw0XWk6WWiXHaQCGxuwM-92HrBhlA4WOd_AGmjVmQkiHyAqQjW2yByc" alt="Google Chrome">
+                <h3>Google Chrome</h3>
+            </div>
+            <div class="product-box">
+                <img src="https://www.google.com/images/branding/product/2x/maps_96in128dp.png" alt="Google Maps">
+                <h3>Google Maps</h3>
+            </div>
+            <div class="product-box">
+                <img src="https://img.freepik.com/premium-vector/youtube-logo-with-red-square_876006-17.jpg" alt="YouTube">
+                <h3>YouTube</h3>
+            </div>
+        </div>
+
+        <!-- Product Row 3 -->
+        <div class="product-row">
+            <div class="product-box">
+                <img src="https://download.logo.wine/logo/Google_Assistant/Google_Assistant-Logo.wine.png" alt="Google Assistant">
+                <h3>Google Assistant</h3>
+            </div>
+            <div class="product-box">
+                <img src="https://static.vecteezy.com/system/resources/previews/020/964/377/non_2x/gmail-mail-icon-for-web-design-free-png.png" alt="Gmail">
+                <h3>Gmail</h3>
+            </div>
+            <div class="product-box">
+                <img src="https://pngimg.com/d/google_drive_PNG12.png" alt="Google Drive">
+                <h3>Google Drive</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2024 Google. All Rights Reserved.
+    </footer>
+</body>
+</html>

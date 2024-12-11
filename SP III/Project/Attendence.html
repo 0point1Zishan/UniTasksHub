@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Attendance</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 1.2rem;
+    }
+
+    .container {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: #34495e;
+      color: white;
+    }
+
+    thead th {
+      padding: 15px;
+      text-align: left;
+      font-size: 1rem;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    tbody td {
+      padding: 15px;
+      text-align: left;
+    }
+
+    td, th {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .checkbox {
+      text-align: center;
+    }
+
+    .submit-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background: linear-gradient(135deg, #34495e, #2c3e50);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: linear-gradient(135deg, #1a252f, #2c3e50);
+    }
+
+    @media screen and (max-width: 768px) {
+      table {
+        font-size: 0.9rem;
+      }
+
+      thead th {
+        font-size: 1rem;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Employee Attendance</h1>
+    <p>Mark attendance for the day</p>
+  </header>
+
+  <div class="container">
+    <form action="#" method="post">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Present</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Zishan)</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[rifad]"></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Rifad</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[zisan]"></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Fahim</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[fahim]"></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Shihab</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[shihab]"></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Protik</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[protik]"></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Tawfik</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[tawfik]"></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Sabbir</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[sabbir]"></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Titas</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[titas]"></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Oli</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[oli]"></td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Taif</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[taif]"></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>Moshiur</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[moshiur]"></td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>Tanvir</td>
+            <td class="checkbox"><input type="checkbox" name="attendance[tanvir]"></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="submit" class="submit-btn">Submit Attendance</button>
+    </form>
+  </div>
+</body>
+</html>

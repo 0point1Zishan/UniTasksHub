@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard and Instruction Page</title>
+    <!-- Font Awesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* General Reset */
+        body, h1, h2, h3, p, label, input, textarea, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #3f51b5, #5c6bc0);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-title {
+            font-size: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #2d323e;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            height: 100vh;
+            position: fixed;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu ul li {
+            border-top: 1px solid #444950;
+        }
+
+        .menu ul li a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .menu ul li a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .menu ul li a:hover {
+            background-color: #3b82f6;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 20px;
+        }
+
+        /* Instruction Page */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .instruction-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .instruction-section h2 {
+            color: #3f51b5;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .input-field, .textarea-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        #submit-btn {
+            display: inline-block;
+            background: #3f51b5;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #submit-btn:hover {
+            background: #2c387e;
+        }
+
+        .hidden-checkbox {
+            display: none;
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 5px;
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
+
+        .hidden-checkbox:checked + .hidden-message {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #3f51b5;
+            color: #fff;
+            margin-top: 20px;
+            border-top: 3px solid #5c6bc0;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">Google</div>
+        <nav class="menu">
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> My Profile</a></li>
+                <li><a href="#"><i class="fas fa-tasks"></i> Tasks</a></li>
+                <li><a href="#"><i class="fas fa-users"></i> Team</a></li>
+                <li><a href="#"><i class="fas fa-wallet"></i> Finance</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Reports</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
+                <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard -->
+        <header>
+            <h1 class="main-title">Instructions</h1>
+        </header>
+        <section class="container">
+            <h2>Dashboard Overview</h2>
+            <p>Welcome to the dashboard. Below are the instructions from the CEO and Manager.</p>
+        </section>
+
+        <!-- Instruction Section -->
+        <section class="container">
+            <div class="instruction-section">
+                <h2>From CEO</h2>
+                <label for="ceo-date">Date & Time:</label>
+                <input type="datetime-local" id="ceo-date" class="input-field">
+                <label for="ceo-message">Message:</label>
+                <textarea id="ceo-message" rows="4" class="textarea-field" placeholder="Enter CEO message here..."></textarea>
+            </div>
+
+            <div class="instruction-section">
+                <h2>From Manager</h2>
+                <label for="manager-date">Date & Time:</label>
+                <input type="datetime-local" id="manager-date" class="input-field">
+                <label for="manager-department">Department:</label>
+                <input type="text" id="manager-department" class="input-field" placeholder="Enter department...">
+                <label for="manager-message">Message:</label>
+                <textarea id="manager-message" rows="4" class="textarea-field" placeholder="Enter Manager message here..."></textarea>
+            </div>
+        </section>
+
+        <!-- Submit Section -->
+        <label for="submit-checkbox">
+            <button id="submit-btn">Submit</button>
+        </label>
+        <input type="checkbox" id="submit-checkbox" class="hidden-checkbox">
+        <section id="output-section" class="hidden-message">
+            <p>Submitted</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Google Instruction and Dashboard Inc. All rights reserved.</p>
+    </footer>
+</body>
+</html>

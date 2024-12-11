@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Dashboard</title>
+  <!-- Font Awesome for Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      color: #333;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h3, p {
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      display: flex;
+      flex: 1; /* Ensures the main content grows to fill the remaining height */
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background-color: #2d323e;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+    }
+
+    .sidebar-header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .menu ul li {
+      border-top: 1px solid #444950;
+    }
+
+    .menu ul li a {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      color: #fff;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .menu ul li a i {
+      margin-right: 10px;
+      font-size: 18px;
+    }
+
+    .menu ul li a:hover {
+      background-color: #3b82f6;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      justify-content: space-between; /* Keeps footer at the bottom */
+    }
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .welcome-message h1 {
+      font-size: 24px;
+      color: #3b82f6;
+    }
+
+    .welcome-message p {
+      font-size: 14px;
+    }
+
+    .punch-in {
+      padding: 10px 20px;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .punch-in:hover {
+      background-color: #5590f9;
+    }
+
+    .profile-name {
+      margin-left: 15px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    /* Dashboard Panels */
+    .dashboard-panels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .panel {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .panel.large {
+      grid-column: span 2;
+    }
+
+    .panel h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      color: #3b82f6;
+      text-transform: uppercase;
+    }
+
+    .panel p {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    /* Event List */
+    .event-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .event-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .event-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 20px;
+      line-height: 1;
+      color: #3b82f6; /* Change the color to match the design */
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #f1f1f1;
+      color: #333;
+      font-size: 14px;
+      margin-top: auto; /* Pushes the footer to the bottom */
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Dashboard Container -->
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">Google</div>
+      <nav class="menu">
+        <ul>
+          <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+          <li><a href="#"><i class="fas fa-user"></i> My Profile</a></li>
+          <li><a href="#"><i class="fas fa-tasks"></i> Tasks</a></li>
+          <li><a href="#"><i class="fas fa-it"></i> IT & Engineering</a></li>
+          <li><a href="#"><i class="fas fa-employee"></i> Employee List</a></li>
+          <li><a href="#"><i class="fas fa-chart-line"></i> Reports</a></li>
+          <li><a href="#"><i class="fas fa-instructions-alt"></i> Instructions</a></li>
+          <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="main-header">
+        <div class="welcome-message">
+          <h1>Welcome, Zishan</h1>
+          <p>Today's Date: <span id="current-date"></span></p>
+        </div>
+        <div class="profile-section">
+          <button class="punch-in">Punch In</button>
+          <div class="profile-name">Md. Zishan Sarkar Murad</div>
+        </div>
+      </header>
+
+      <!-- Dashboard Panels -->
+      <section class="dashboard-panels">
+        <!-- Employee Panels -->
+        <div class="panel">
+          <h3><i class="fas fa-user-check"></i> Attendance</h3>
+          <p>85%</p>
+        </div>
+        <div class="panel">
+          <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
+          <p>2 New</p>
+        </div>
+
+        <!-- HR Panels -->
+        <div class="panel">
+          <h3><i class="fas fa-id-card"></i> HR Requests</h3>
+          <p>5 Pending</p>
+        </div>
+
+        <!-- Developer Panels -->
+        <div class="panel">
+          <h3><i class="fas fa-code"></i> Developer Tasks</h3>
+          <p>12 Assigned</p>
+        </div>
+
+        <!-- Finance Panels -->
+        <div class="panel">
+          <h3><i class="fas fa-dollar-sign"></i> Payroll</h3>
+          <p>$50,000,000 Processed</p>
+        </div>
+
+        <!-- Calendar -->
+        <div class="panel large">
+          <h3><i class="fas fa-calendar-alt"></i> Calendar</h3>
+          <div class="calendar-section panel">
+            <h3><i class="fas fa-calendar-alt"></i> Upcoming Events</h3>
+            <ul class="event-list">
+              <li><strong>Team Meeting:</strong> Dec 8, 2024 - 10:00 AM</li>
+              <li><strong>Project Deadline:</strong> Dec 12, 2024</li>
+              <li><strong>Holiday:</strong> Christmas - Dec 25, 2024</li>
+              <li><strong>Workshop:</strong> Web Security - Jan 5, 2025</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        &copy; 2024 Company Name. All Rights Reserved.
+      </footer>
+    </main>
+  </div>
+</body>
+<script>
+  // Set the current date dynamically
+  document.getElementById("current-date").innerText = new Date().toLocaleDateString();
+</script>
+</html>
