@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard and Instruction Page</title>
+    <title>Instructions</title>
     <!-- Font Awesome for Icons -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
@@ -67,12 +65,8 @@
             align-items: center;
             padding: 15px 20px;
             color: #fff;
+            text-decoration: none;
             transition: background-color 0.3s, color 0.3s;
-        }
-
-        .menu ul li a i {
-            margin-right: 10px;
-            font-size: 18px;
         }
 
         .menu ul li a:hover {
@@ -148,10 +142,6 @@
             background: #2c387e;
         }
 
-        .hidden-checkbox {
-            display: none;
-        }
-
         .hidden-message {
             display: none;
             margin-top: 30px;
@@ -164,7 +154,7 @@
             font-weight: bold;
         }
 
-        .hidden-checkbox:checked + .hidden-message {
+        .visible-message {
             display: block;
         }
 
@@ -182,6 +172,12 @@
             font-size: 0.9rem;
         }
     </style>
+    <script>
+        function handleSubmit() {
+            const message = document.getElementById('output-section');
+            message.classList.add('visible-message');
+        }
+    </script>
 </head>
 <body>
     <!-- Sidebar -->
@@ -189,13 +185,12 @@
         <div class="sidebar-header">Google</div>
         <nav class="menu">
             <ul>
-                <li><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-user"></i> My Profile</a></li>
-                <li><a href="#"><i class="fas fa-tasks"></i> Tasks</a></li>
-                <li><a href="#"><i class="fas fa-users"></i> Team</a></li>
-                <li><a href="#"><i class="fas fa-wallet"></i> Finance</a></li>
+                <li><a href="Dashboard.html"><i class="fas fa-instructions-alt"></i> Dashboard</a></li>
+                <li><a href="IT_and_Engineering.html"><i class="fas fa-it"></i> IT & Engineering</a></li>
+                <li><a href="Employee_List.html"><i class="fas fa-employee"></i> Employee List</a></li>
+                <li><a href="Attendence.html"><i class="fas fa-Attendance"></i> Attendance</a></li>
+                <li><a href="Products.html"><i class="fas fa-Products"></i> Products</a></li>
                 <li><a href="#"><i class="fas fa-chart-line"></i> Reports</a></li>
-                <li><a href="#"><i class="fas fa-calendar-alt"></i> Calendar</a></li>
                 <li><a href="#"><i class="fas fa-cogs"></i> Settings</a></li>
             </ul>
         </nav>
@@ -203,7 +198,6 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Dashboard -->
         <header>
             <h1 class="main-title">Instructions</h1>
         </header>
@@ -212,7 +206,6 @@
             <p>Welcome to the dashboard. Below are the instructions from the CEO and Manager.</p>
         </section>
 
-        <!-- Instruction Section -->
         <section class="container">
             <div class="instruction-section">
                 <h2>From CEO</h2>
@@ -234,12 +227,9 @@
         </section>
 
         <!-- Submit Section -->
-        <label for="submit-checkbox">
-            <button id="submit-btn">Submit</button>
-        </label>
-        <input type="checkbox" id="submit-checkbox" class="hidden-checkbox">
+        <button id="submit-btn" onclick="handleSubmit()">Submit</button>
         <section id="output-section" class="hidden-message">
-            <p>Submitted</p>
+            Your submission was successful!
         </section>
     </main>
 
