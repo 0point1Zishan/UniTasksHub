@@ -18,8 +18,21 @@ arrayParameter(){
     done
 }
 
+factorial(){
+    local n=$1
+    if (( n == 1 )); then
+        echo 1
+    else
+        local pre=$(factorial $(( n-1 )) )
+        echo $(( n * pre ))
+    fi
+}
+
 multiple_parameter 10 "abc" 3.8 'a'
 echo ""
 
 read -a num -p "Enter some elements: "
 arrayParameter ${num[@]}
+
+res=$(factorial 5)
+echo "Factorial of 5 is: $res."
