@@ -1,16 +1,11 @@
 #!/bin/bash
 
-# Enhanced CPU Scheduling Simulator
-# This script simulates different CPU scheduling algorithms: FCFS, SJF, and Round Robin
-# Features: Ready Queue visualization, Job Queue tracking, and Gantt Chart display
-
-clear
 echo "===================================="
 echo "       MultiAlgo-CPU-Scheduler      "
 echo "===================================="
 echo
 
-# Function to display the menu
+# Function to display menu
 display_menu() {
     echo "Select a scheduling algorithm:"
     echo "1. First-Come, First-Served (FCFS)"
@@ -24,16 +19,15 @@ display_menu() {
 # Function to get process details from user
 get_processes() {
     echo
-    read -p "Enter number of processes: " n_processes
+    read -p "Enter number of processes: " nPro
     
-    # Arrays to store process details
     declare -a process_ids
     declare -a arrival_times
     declare -a burst_times
     
     echo
     echo "Enter process details:"
-    for ((i=0; i<n_processes; i++)); do
+    for ((i=0; i<nPro; i++)); do
         process_ids[$i]=$((i+1))
         read -p "Process P$((i+1)) - Arrival time: " arrival_times[$i]
         read -p "Process P$((i+1)) - Burst time: " burst_times[$i]
@@ -44,7 +38,7 @@ get_processes() {
     PROCESS_IDS=("${process_ids[@]}")
     ARRIVAL_TIMES=("${arrival_times[@]}")
     BURST_TIMES=("${burst_times[@]}")
-    N_PROCESSES=$n_processes
+    N_PROCESSES=$nPro
 }
 
 # Function to display a Gantt chart
@@ -56,7 +50,7 @@ display_gantt_chart() {
     echo "Gantt Chart:"
     echo "============"
     
-    # Print the top border
+    # Print top border
     echo -n "┌"
     for ((i=0; i<length; i++)); do
         for ((j=0; j<10; j++)); do
@@ -68,21 +62,21 @@ display_gantt_chart() {
     done
     echo "┐"
     
-    # Print the process IDs
+    # Print process IDs
     for ((i=0; i<length; i++)); do
-        local padding=$((5 - ${#chart[$i]} / 2))
+        local pad=$((5 - ${#chart[$i]} / 2))
         echo -n "│"
-        for ((j=0; j<padding; j++)); do
+        for ((j=0; j<pad; j++)); do
             echo -n " "
         done
         echo -n "${chart[$i]}"
-        for ((j=0; j<(10-padding-${#chart[$i]}); j++)); do
+        for ((j=0; j<(10-pad-${#chart[$i]}); j++)); do
             echo -n " "
         done
     done
     echo "│"
     
-    # Print the bottom border
+    # Print bottom border
     echo -n "└"
     for ((i=0; i<length; i++)); do
         for ((j=0; j<10; j++)); do
@@ -94,12 +88,12 @@ display_gantt_chart() {
     done
     echo "┘"
     
-    # Print the timeline
+    # Print timeline
     echo -n "0"
     for ((i=0; i<length; i++)); do
         local time_label="${GANTT_TIMES[$i]}"
-        local padding=$((10 - ${#time_label}))
-        for ((j=0; j<padding; j++)); do
+        local pad=$((10 - ${#time_label}))
+        for ((j=0; j<pad; j++)); do
             echo -n " "
         done
         echo -n "$time_label"
@@ -149,7 +143,7 @@ fcfs_scheduling() {
     declare -a process_states
     declare -a execution_history
     
-    # Sort processes by arrival time (simple bubble sort)
+    # Sort Arrival Time, Bust Time and Process Time
     for ((i=0; i<n-1; i++)); do
         for ((j=0; j<n-i-1; j++)); do
             if (( $(echo "${arrival_times[$j]} > ${arrival_times[$j+1]}" | bc -l) )); then
@@ -171,7 +165,6 @@ fcfs_scheduling() {
         done
     done
     
-    # Initialize process states (0=not arrived, 1=in job queue, 2=in ready queue, 3=running, 4=completed)
     for ((i=0; i<n; i++)); do
         process_states[$i]=0
     done
@@ -219,7 +212,7 @@ fcfs_scheduling() {
         display_queue_state "Job Queue" job_queue[@]
         display_queue_state "Ready Queue" ready_queue[@]
         
-        # If no process is running, select the next one from ready queue (FCFS)
+        # If no process is running, select next one from ready queue (FCFS)
         if (( current_process == -1 )); then
             for ((i=0; i<n; i++)); do
                 if (( process_states[i] == 2 )); then
@@ -240,7 +233,7 @@ fcfs_scheduling() {
         
         # If a process is running, advance time to its completion
         if (( current_process != -1 )); then
-            # Complete the current process
+            # Complete current process
             completion_times[$current_process]=$(( current_time + burst_times[current_process] ))
             current_time=${completion_times[$current_process]}
 
@@ -267,7 +260,7 @@ fcfs_scheduling() {
                 gantt_times+=(${next_arrival})
                 current_time=$next_arrival
             else 
-                # Something went wrong, break the loop
+                # Something went wrong, break loop
                 echo "Error: No more processes to schedule but not all completed."
                 break
             fi
@@ -383,7 +376,7 @@ sjf_scheduling() {
         display_queue_state "Job Queue" job_queue[@]
         display_queue_state "Ready Queue" ready_queue[@]
         
-        # If no process is running, select the shortest job from ready queue
+        # If no process is running, select shortest job from ready queue
         if (( current_process == -1 )); then
             local shortest_job=-1
             local min_burst=999999
@@ -410,7 +403,7 @@ sjf_scheduling() {
         
         # If a process is running, advance time to its completion
         if (( current_process != -1 )); then
-            # Complete the current process
+            # Complete current process
             completion_times[$current_process]=$(( current_time + remaining_times[current_process] ))
             current_time=${completion_times[$current_process]}
             remaining_times[$current_process]=0
@@ -437,7 +430,7 @@ sjf_scheduling() {
                 gantt_times+=(${next_arrival})
                 current_time=$next_arrival
             else 
-                # Something went wrong, break the loop
+                # Something went wrong, break loop
                 echo "Error: No more processes to schedule but not all completed."
                 break
             fi
@@ -486,7 +479,7 @@ sjf_scheduling() {
 
 # Function to implement Round Robin algorithm with enhanced visuals
 round_robin_scheduling() {
-    if ((n_processes == 0)); then
+    if ((nPro == 0)); then
         return
     fi
     
@@ -530,7 +523,7 @@ round_robin_scheduling() {
     local current_time=$min_arrival
     gantt_times[0]=$current_time
     
-    # Display the initial process table
+    # Display initial process table
     echo
     echo "======================="
     echo "Process Table:"
@@ -658,7 +651,7 @@ round_robin_scheduling() {
                 echo ">> Process P${process_ids[$current_idx]} PREEMPTED at time $current_time"
                 echo "   Remaining time: ${remaining_times[$current_idx]} units"
                 
-                # Move this process to the end of ready queue
+                # Move this process to end of ready queue
                 process_states[$current_idx]=2
             fi
         fi
@@ -711,10 +704,10 @@ round_robin_scheduling() {
     echo "==============================="
     echo "Round Robin (RR) is a preemptive CPU scheduling algorithm:"
     echo "  • Each process gets a small unit of CPU time (time quantum)"
-    echo "  • After time quantum expires, process is preempted and moved to the end of the queue"
+    echo "  • After time quantum expires, process is preempted and moved to end of queue"
     echo "  • Ensures fairness as each process gets equal CPU time in each cycle"
     echo "  • Good for time-sharing systems and interactive processes"
-    echo "  • Performance depends heavily on the choice of time quantum"
+    echo "  • Performance depends heavily on choice of time quantum"
     echo "  • Small quantum: better response time but more context switches"
     echo "  • Large quantum: fewer context switches but may behave like FCFS"
     echo
@@ -742,7 +735,7 @@ display_visual_queue() {
             local proc_id=${queue[$i]}
             local proc_index=0
             
-            # Find the process index
+            # Find process index
             for ((j=0; j<N_PROCESSES; j++)); do
                 if (( PROCESS_IDS[j] == proc_id )); then
                     proc_index=$j
@@ -776,7 +769,7 @@ display_gantt_chart() {
     echo "Gantt Chart:"
     echo "==========="
     
-    # Print the top border
+    # Print top border
     echo -n "┌"
     for ((i=0; i<length; i++)); do
         for ((j=0; j<10; j++)); do
@@ -788,22 +781,22 @@ display_gantt_chart() {
     done
     echo "┐"
     
-    # Print the process IDs
+    # Print process IDs
     for ((i=0; i<length; i++)); do
         local proc_id=${chart[$i]}
-        local padding=$((5 - ${#proc_id} / 2))
+        local pad=$((5 - ${#proc_id} / 2))
         echo -n "│"
-        for ((j=0; j<padding; j++)); do
+        for ((j=0; j<pad; j++)); do
             echo -n " "
         done
         echo -n "${proc_id}"
-        for ((j=0; j<(10-padding-${#proc_id}); j++)); do
+        for ((j=0; j<(10-pad-${#proc_id}); j++)); do
             echo -n " "
         done
     done
     echo "│"
     
-    # Print the bottom border
+    # Print bottom border
     echo -n "└"
     for ((i=0; i<length; i++)); do
         for ((j=0; j<10; j++)); do
@@ -815,12 +808,12 @@ display_gantt_chart() {
     done
     echo "┘"
     
-    # Print the timeline
+    # Print timeline
     echo -n "0"
     for ((i=0; i<length; i++)); do
         local time_label="${GANTT_TIMES[$i]}"
-        local padding=$((10 - ${#time_label}))
-        for ((j=0; j<padding; j++)); do
+        local pad=$((10 - ${#time_label}))
+        for ((j=0; j<pad; j++)); do
             echo -n " "
         done
         echo -n "$time_label"
@@ -835,7 +828,7 @@ compare_algorithms() {
     echo "ALGORITHM COMPARISON AND RECOMMENDATION"
     echo "================================================="
     
-    # Implement the logic to compare the algorithms based on current data
+    # Implement logic to compare algorithms based on current data
     local n=${#BURST_TIMES[@]}
     local all_similar=1
     local similar_arrival=1
@@ -885,7 +878,7 @@ compare_algorithms() {
         echo
         echo "BEST CHOICE: SJF (Shortest Job First)"
     else
-        # Find the variance in burst times
+        # Find variance in burst times
         local sum=0
         local sum_sq=0
         
@@ -921,7 +914,7 @@ compare_algorithms() {
     echo "================================================="
     echo "NOTE: This recommendation is based on theoretical"
     echo "performance characteristics of each algorithm and"
-    echo "the specific pattern of your process data."
+    echo  specific pattern of your process data."
     echo "================================================="
 }
 
