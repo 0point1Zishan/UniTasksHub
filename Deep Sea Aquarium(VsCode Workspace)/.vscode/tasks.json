@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "cppbuild",
+      "label": "Build Graphics Project",
+      "command": "g++.exe",
+      "args": [
+        "-fdiagnostics-color=always",
+        "-g",
+        "${workspaceFolder}/src/main.cpp",
+        "-I${workspaceFolder}/include",
+        "-L${workspaceFolder}/lib",
+        "-lfreeglut",
+        "-lopengl32",
+        "-lglu32",
+        "-o",
+        "${workspaceFolder}/myProgram.exe"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "Compiler for GLUT"
+    }
+  ]
+}
